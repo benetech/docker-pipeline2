@@ -10,6 +10,8 @@ RUN groupadd -g 11000 -r pipeline2 && \
 
 RUN chown -R pipeline2.pipeline2 /home/root/daisy-pipeline/*
 
+EXPOSE 8181
+
 USER pipeline2
 
 CMD ["/home/root/daisy-pipeline/bin/pipeline2"]
