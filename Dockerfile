@@ -20,6 +20,9 @@ RUN groupadd -g 11000 -r pipeline2 && \
 
 RUN chown -R pipeline2.pipeline2 /usr/local/daisy-pipeline/*
 
+RUN ls -l /usr/local/
+RUN ls -l /home/root/
+
 EXPOSE 8181
 
 USER pipeline2
