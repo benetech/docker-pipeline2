@@ -26,8 +26,4 @@ EXPOSE 8181
 
 USER pipeline2
 
-RUN ls -l /usr/local/
-RUN ls -l /usr/local/pipeline-assembly-1.7.1/
-RUN ls -l /usr/local/pipeline-assembly-1.7.1/bin/
-
 CMD ["/bin/sh", "-c", "$PIPELINE2_HOME/bin/pipeline2", "remote"]
