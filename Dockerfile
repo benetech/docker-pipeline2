@@ -22,6 +22,8 @@ RUN groupadd -g 11000 -r pipeline2 && \
 
 RUN chown -R pipeline2.pipeline2 $PIPELINE2_HOME/*
 
+RUN sed -i -e 's/org\.daisy\.pipeline\.ws\.host=localhost/org\.daisy\.pipeline\.ws\.host=0.0.0.0/g' $PIPELINE2_HOME/etc/system.properties
+
 EXPOSE 8181
 
 USER pipeline2
