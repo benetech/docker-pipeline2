@@ -26,4 +26,4 @@ EXPOSE 8181
 
 USER pipeline2
 
-CMD ["$PIPELINE2_HOME/bin/pipeline2", "remote"]
+CMD ["/bin/sh", "-c", "$PIPELINE2_HOME/bin/pipeline2", "remote"]
