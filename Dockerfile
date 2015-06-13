@@ -3,7 +3,7 @@ FROM ubuntu:14.04
 MAINTAINER Ron Ellis <rone@benetech.org>
 
 ENV BASEDIR /usr/local
-ENV PIPELINE2_HOME $BASEDIR/pipeline-assembly-1.7.1
+ENV PIPELINE2_HOME $BASEDIR/daisy-pipeline
 ENV PIPELINE2_AUTH false
 ENV PIPELINE2_LOCAL false
 
@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y openjdk-7-jre wget unzip
 RUN locale-gen en_US en_US.UTF-8
 
 # Install Pipeline 2
-RUN wget https://github.com/daisy/pipeline-assembly/archive/v1.7.1.zip -O pipeline2.zip && unzip pipeline2.zip
+RUN wget https://github.com/daisy/pipeline-assembly/releases/download/v1.9/pipeline2-1.9-webui_linux.zip -O pipeline2.zip && unzip pipeline2.zip
 
 RUN groupadd -g 11000 -r pipeline2 && \
     useradd -g pipeline2 -u 11000 -m -s /bin/bash pipeline2 
