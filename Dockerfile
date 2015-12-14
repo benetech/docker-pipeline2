@@ -4,6 +4,7 @@ MAINTAINER Ron Ellis <rone@benetech.org>
 
 ENV BASEDIR /usr/local
 ENV PIPELINE2_HOME $BASEDIR/daisy-pipeline
+ENV PIPELINE2_SYS_PROPS $PIPELINE2_HOME/etc/system.properties
 ENV PIPELINE2_AUTH false
 ENV PIPELINE2_LOCAL false
 
@@ -22,7 +23,9 @@ RUN groupadd -g 11000 -r pipeline2 && \
 
 RUN chown -R pipeline2.pipeline2 $PIPELINE2_HOME/*
 
-RUN sed -i -e 's/org\.daisy\.pipeline\.ws\.host=localhost/org\.daisy\.pipeline\.ws\.host=0.0.0.0/g' $PIPELINE2_HOME/etc/system.properties
+RUN sed -i -e 's/org\.daisy\.pipeline\.ws\.host=localhost/org\.daisy\.pipeline\.ws\.host=0.0.0.0/g' $PIPELINE2_HOME/etc/system.properties && \
+    echo 'org.ops4j.pax.logging.DefaultServiceLog.level=WARN' >> $PIPELINE2_SYS_PROPS && \
+    echo 'org.ops4j.pax.logging.service.frameworkEventsLogLevel=WARN' >> $PIPELINE2_SYS_PROPS
 
 USER pipeline2
 
