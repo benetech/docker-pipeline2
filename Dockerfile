@@ -20,10 +20,10 @@ RUN wget https://github.com/daisy/pipeline-assembly/releases/download/v1.9/pipel
 
 RUN groupadd -g 11000 -r pipeline2 && \
     useradd -g pipeline2 -u 11000 -m -s /bin/bash pipeline2 && \ 
-    chown -R pipeline2.pipeline2 $PIPELINE2_HOME/* && \
+    mkdir $PIPELINE2_HOME/data && \
+    chown -R root.root $PIPELINE2_HOME && \
     chmod -R 755 $PIPELINE2_HOME && \
-    chmod -R 755 $PIPELINE2_HOME/cli && \
-    chmod -R 755 $PIPELINE2_HOME/system && \
+    chown -R pipeline2.pipeline2 $PIPELINE2_HOME/data && \
     rm pipeline2.zip
 
 RUN sed -i -e 's/org\.daisy\.pipeline\.ws\.host=localhost/org\.daisy\.pipeline\.ws\.host=0.0.0.0/g' $PIPELINE2_HOME/etc/system.properties && \
