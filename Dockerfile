@@ -28,6 +28,10 @@ RUN groupadd -g 11000 -r pipeline2 && \
     find $PIPELINE2_HOME -type f -name '*.jar' -exec chmod -x {} \; && \
     find $PIPELINE2_HOME -type f -name '*.dat' -exec chmod -x {} \; && \
     find $PIPELINE2_HOME -type f -name '*.properties' -exec chmod -x {} \; && \
+    find $PIPELINE2_HOME -type f -name '*.js' -exec chmod -x {} \; && \
+    find $PIPELINE2_HOME -type f -name '*.css' -exec chmod -x {} \; && \
+    find $PIPELINE2_HOME -type f -name '*.conf' -exec chmod -x {} \; && \
+    find $PIPELINE2_HOME -type f -name '*.gif' -exec chmod -x {} \; && \
     rm pipeline2.zip && \
     rm -r $PIPELINE2_HOME/samples
 
