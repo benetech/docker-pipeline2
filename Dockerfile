@@ -19,9 +19,11 @@ RUN locale-gen en_US en_US.UTF-8
 RUN wget https://github.com/daisy/pipeline-assembly/releases/download/v1.9/pipeline2-1.9-webui_linux.zip -O pipeline2.zip && unzip pipeline2.zip
 
 RUN groupadd -g 11000 -r pipeline2 && \
-    useradd -g pipeline2 -u 11000 -m -s /bin/bash pipeline2 
-
-RUN chown -R pipeline2.pipeline2 $PIPELINE2_HOME/*
+    useradd -g pipeline2 -u 11000 -m -s /bin/bash pipeline2 && \ 
+    chown -R pipeline2.pipeline2 $PIPELINE2_HOME/* && \
+    chmod -R 755 $PIPELINE2_HOME && \
+    chmod -R 755 $PIPELINE2_HOME/cli && \
+    chmod -R 755 $PIPELINE2_HOME/system
 
 RUN sed -i -e 's/org\.daisy\.pipeline\.ws\.host=localhost/org\.daisy\.pipeline\.ws\.host=0.0.0.0/g' $PIPELINE2_HOME/etc/system.properties && \
     echo 'org.ops4j.pax.logging.DefaultServiceLog.level=WARN' >> $PIPELINE2_SYS_PROPS && \
