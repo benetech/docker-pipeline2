@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 MAINTAINER Ron Ellis <rone@benetech.org>
 
@@ -24,7 +24,10 @@ RUN groupadd -g 11000 -r pipeline2 && \
     chown -R root.root $PIPELINE2_HOME && \
     chmod -R 755 $PIPELINE2_HOME && \
     chown -R pipeline2.pipeline2 $PIPELINE2_HOME/data && \
-    rm pipeline2.zip
+    chmod -x $PIPELINE2_HOME/*.txt $PIPELINE2_HOME/etc/* && \
+    find $PIPELINE2_HOME -type f -name '*.jar' -exec chmod -x {} \; && \
+    rm pipeline2.zip && \
+    rm -r $PIPELINE2_HOME/samples
 
 RUN sed -i -e 's/org\.daisy\.pipeline\.ws\.host=localhost/org\.daisy\.pipeline\.ws\.host=0.0.0.0/g' $PIPELINE2_HOME/etc/system.properties && \
     echo 'org.ops4j.pax.logging.DefaultServiceLog.level=WARN' >> $PIPELINE2_SYS_PROPS && \
