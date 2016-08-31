@@ -32,6 +32,7 @@ RUN groupadd -g 11000 -r pipeline2 && \
     find $PIPELINE2_HOME -type f -name '*.css' -exec chmod -x {} \; && \
     find $PIPELINE2_HOME -type f -name '*.conf' -exec chmod -x {} \; && \
     find $PIPELINE2_HOME -type f -name '*.gif' -exec chmod -x {} \; && \
+    find $PIPELINE2_HOME -type f -name '*.html' -exec chmod -x {} \; && \
     rm pipeline2.zip && \
     rm -r $PIPELINE2_HOME/samples
 
