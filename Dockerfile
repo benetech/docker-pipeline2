@@ -26,6 +26,8 @@ RUN groupadd -g 11000 -r pipeline2 && \
     chown -R pipeline2.pipeline2 $PIPELINE2_HOME/data && \
     chmod -x $PIPELINE2_HOME/*.txt $PIPELINE2_HOME/etc/* && \
     find $PIPELINE2_HOME -type f -name '*.jar' -exec chmod -x {} \; && \
+    find $PIPELINE2_HOME -type f -name '*.dat' -exec chmod -x {} \; && \
+    find $PIPELINE2_HOME -type f -name '*.properties' -exec chmod -x {} \; && \
     rm pipeline2.zip && \
     rm -r $PIPELINE2_HOME/samples
 
