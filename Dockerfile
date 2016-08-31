@@ -23,7 +23,8 @@ RUN groupadd -g 11000 -r pipeline2 && \
     chown -R pipeline2.pipeline2 $PIPELINE2_HOME/* && \
     chmod -R 755 $PIPELINE2_HOME && \
     chmod -R 755 $PIPELINE2_HOME/cli && \
-    chmod -R 755 $PIPELINE2_HOME/system
+    chmod -R 755 $PIPELINE2_HOME/system && \
+    rm pipeline2.zip
 
 RUN sed -i -e 's/org\.daisy\.pipeline\.ws\.host=localhost/org\.daisy\.pipeline\.ws\.host=0.0.0.0/g' $PIPELINE2_HOME/etc/system.properties && \
     echo 'org.ops4j.pax.logging.DefaultServiceLog.level=WARN' >> $PIPELINE2_SYS_PROPS && \
