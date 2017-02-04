@@ -37,9 +37,9 @@ RUN rm pipeline2.zip  && \
     apt-get remove --purge --yes $BUILDTIME_DEPS && \
     apt-get install --yes net-tools
 
-# configures bind host, port etc.
+# configures bind host, port etc for DAISY Pipeline2
 COPY system.properties /usr/local/daisy-pipeline/etc/system.properties
-# configures default (and other) log levels
+# configures default (and other) log levels for DAISY Pipeline2
 COPY config-logback.xml /usr/local/daisy-pipeline/etc/config-logback.xml
 
 USER pipeline2
