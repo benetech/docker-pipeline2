@@ -16,12 +16,9 @@ RUN apt-get update && \
 # Install and configure DAISY Pipeline 2
 RUN wget $PIPELINE2_DOWNLOAD_URL -O pipeline2.zip && \
     unzip pipeline2.zip && \
-    groupadd -g 11000 -r pipeline2 && \
-    useradd -g pipeline2 -u 11000 -m pipeline2 && \ 
     mkdir $PIPELINE2_HOME/data && \
     chown -R root.root $PIPELINE2_HOME && \
     chmod -R 755 $PIPELINE2_HOME && \
-    chown -R pipeline2.pipeline2 $PIPELINE2_HOME/data && \
     chmod -x $PIPELINE2_HOME/*.txt $PIPELINE2_HOME/etc/* && \
     find $PIPELINE2_HOME -type f -name '*.jar' -exec chmod -x {} \; && \
     find $PIPELINE2_HOME -type f -name '*.dat' -exec chmod -x {} \; && \
@@ -40,7 +37,5 @@ RUN rm pipeline2.zip  && \
 COPY system.properties /usr/local/daisy-pipeline/etc/system.properties
 # configures default (and other) log levels for DAISY Pipeline2
 COPY config-logback.xml /usr/local/daisy-pipeline/etc/config-logback.xml
-
-USER pipeline2
 
 CMD ["/bin/sh", "-c", "$PIPELINE2_HOME/bin/pipeline2", "remote"]
