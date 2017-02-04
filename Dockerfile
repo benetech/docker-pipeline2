@@ -19,7 +19,7 @@ RUN apt-get update && \
 RUN wget $PIPELINE2_DOWNLOAD_URL -O pipeline2.zip && \
     unzip pipeline2.zip && \
     groupadd -g 11000 -r pipeline2 && \
-    useradd -g pipeline2 -u 11000 -m -s /bin/bash pipeline2 && \ 
+    useradd -g pipeline2 -u 11000 -m pipeline2 && \ 
     mkdir $PIPELINE2_HOME/data && \
     chown -R root.root $PIPELINE2_HOME && \
     chmod -R 755 $PIPELINE2_HOME && \
