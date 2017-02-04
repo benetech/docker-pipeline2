@@ -34,8 +34,7 @@ RUN wget $PIPELINE2_DOWNLOAD_URL -O pipeline2.zip && \
 
 # remove build time deps
 RUN rm pipeline2.zip  && \
-    apt-get remove --purge --yes $BUILDTIME_DEPS && \
-    apt-get install --yes net-tools
+    apt-get remove --purge --yes $BUILDTIME_DEPS
 
 # configures bind host, port etc for DAISY Pipeline2
 COPY system.properties /usr/local/daisy-pipeline/etc/system.properties
