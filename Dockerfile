@@ -6,6 +6,7 @@ ENV BASEDIR /usr/local
 ENV PIPELINE2_BASEDIR $BASEDIR/daisy-pipeline
 ENV PIPELINE2_DOWNLOAD_URL https://github.com/daisy/pipeline-assembly/releases/download/v1.10.0/pipeline2-1.10.0_linux.zip
 ENV BUILDTIME_DEPS unzip
+ENV TMPDIR /tmp
 
 WORKDIR $BASEDIR 
 
