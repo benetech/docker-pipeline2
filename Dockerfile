@@ -4,14 +4,12 @@ MAINTAINER Ron Ellis <rone@benetech.org>
 
 ENV BASEDIR /usr/local
 ENV PIPELINE2_HOME $BASEDIR/daisy-pipeline
-ENV PIPELINE2_SYS_PROPS $PIPELINE2_HOME/etc/system.properties
-ENV PIPELINE2_AUTH false
-ENV PIPELINE2_LOCAL false
 ENV PIPELINE2_DOWNLOAD_URL https://github.com/daisy/pipeline-assembly/releases/download/v1.10.0/pipeline2-1.10.0_linux.zip
-ENV BUILDTIME_DEPS unzip vim psmisc netcat net-tools
+ENV BUILDTIME_DEPS unzip
 
 WORKDIR $BASEDIR 
 
+# install build time deps
 RUN apt-get update && \
     apt-get install --yes $BUILDTIME_DEPS 
 
