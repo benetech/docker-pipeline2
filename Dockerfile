@@ -37,6 +37,7 @@ RUN groupadd -g 11000 -r pipeline2 && \
     rm -r $PIPELINE2_HOME/samples
 
 RUN sed -i -e 's/org\.daisy\.pipeline\.ws\.host=localhost/org\.daisy\.pipeline\.ws\.host=0.0.0.0/g' $PIPELINE2_HOME/etc/system.properties && \
+	sed -i -e 's/\<root level="DEBUG"\>/\<root level="INFO"\>/g' $PIPELINE2_HOME/etc/config-logback.xml && \
     echo 'org.ops4j.pax.logging.DefaultServiceLog.level=WARN' >> $PIPELINE2_SYS_PROPS && \
     echo 'org.ops4j.pax.logging.service.frameworkEventsLogLevel=WARN' >> $PIPELINE2_SYS_PROPS
 
