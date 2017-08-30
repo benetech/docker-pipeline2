@@ -40,4 +40,4 @@ COPY system.properties /usr/local/daisy-pipeline/etc/system.properties
 # configures default (and other) log levels for DAISY Pipeline2
 COPY config-logback.xml /usr/local/daisy-pipeline/etc/config-logback.xml
 
-CMD ["/bin/sh", "-c", "$PIPELINE2_BASEDIR/bin/pipeline2", "remote"]
+CMD ["/bin/sh", "-c", "$PIPELINE2_BASEDIR/bin/pipeline2 remote"]
