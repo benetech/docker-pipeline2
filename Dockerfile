@@ -5,7 +5,7 @@ MAINTAINER Ron Ellis <rone@benetech.org>
 ENV BASEDIR /usr/local
 ENV PIPELINE2_BASEDIR $BASEDIR/daisy-pipeline
 ENV PIPELINE2_DATA $PIPELINE2_BASEDIR/data
-ENV PIPELINE2_DOWNLOAD_URL https://github.com/daisy/pipeline-assembly/archive/v1.10.3.zip 
+ENV PIPELINE2_DOWNLOAD_URL http://artifactory.benetech.org/ext-releases-local/pipeline2-1.10.3_linux.zip 
 ENV BUILDTIME_DEPS unzip
 ENV TMPDIR /tmp
 
