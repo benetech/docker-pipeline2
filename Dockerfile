@@ -1,46 +1,43 @@
-FROM ubuntu:14.04
+FROM java:8-jre
 
 MAINTAINER Ron Ellis <rone@benetech.org>
 
 ENV BASEDIR /usr/local
-ENV PIPELINE2_HOME $BASEDIR/daisy-pipeline
-ENV PIPELINE2_SYS_PROPS $PIPELINE2_HOME/etc/system.properties
-ENV PIPELINE2_AUTH false
-ENV PIPELINE2_LOCAL false
+ENV PIPELINE2_BASEDIR $BASEDIR/daisy-pipeline
+ENV PIPELINE2_DATA $PIPELINE2_BASEDIR/data
+ENV PIPELINE2_DOWNLOAD_URL http://artifactory.benetech.org/ext-releases-local/pipeline2-1.10.3_linux.zip 
+ENV BUILDTIME_DEPS unzip
+ENV TMPDIR /tmp
 
 WORKDIR $BASEDIR 
 
-# Install dependencies
-RUN sed -i.bak 's/main$/main universe/' /etc/apt/sources.list
-RUN apt-get update && apt-get install -y openjdk-7-jre wget unzip
-RUN locale-gen en_US en_US.UTF-8
+# install build time deps
+RUN apt-get update && \
+    apt-get install --yes $BUILDTIME_DEPS 
 
-# Install Pipeline 2
-RUN wget https://github.com/daisy/pipeline-assembly/releases/download/v1.9/pipeline2-1.9-webui_linux.zip -O pipeline2.zip && unzip pipeline2.zip
+# Install and configure DAISY Pipeline 2
+RUN wget $PIPELINE2_DOWNLOAD_URL -O pipeline2.zip && \
+    unzip pipeline2.zip && \
+    mkdir $PIPELINE2_BASEDIR/data && \
+    chown -R root.root $PIPELINE2_BASEDIR && \
+    chmod -R 755 $PIPELINE2_BASEDIR && \
+    chmod -x $PIPELINE2_BASEDIR/*.txt $PIPELINE2_BASEDIR/etc/* && \
+    find $PIPELINE2_BASEDIR -type f -name '*.jar' -exec chmod -x {} \; && \
+    find $PIPELINE2_BASEDIR -type f -name '*.dat' -exec chmod -x {} \; && \
+    find $PIPELINE2_BASEDIR -type f -name '*.properties' -exec chmod -x {} \; && \
+    find $PIPELINE2_BASEDIR -type f -name '*.js' -exec chmod -x {} \; && \
+    find $PIPELINE2_BASEDIR -type f -name '*.css' -exec chmod -x {} \; && \
+    find $PIPELINE2_BASEDIR -type f -name '*.conf' -exec chmod -x {} \; && \
+    find $PIPELINE2_BASEDIR -type f -name '*.gif' -exec chmod -x {} \; && \
+    find $PIPELINE2_BASEDIR -type f -name '*.html' -exec chmod -x {} \;
 
-RUN groupadd -g 11000 -r pipeline2 && \
-    useradd -g pipeline2 -u 11000 -m -s /bin/bash pipeline2 && \ 
-    mkdir $PIPELINE2_HOME/data && \
-    chown -R root.root $PIPELINE2_HOME && \
-    chmod -R 755 $PIPELINE2_HOME && \
-    chown -R pipeline2.pipeline2 $PIPELINE2_HOME/data && \
-    chmod -x $PIPELINE2_HOME/*.txt $PIPELINE2_HOME/etc/* && \
-    find $PIPELINE2_HOME -type f -name '*.jar' -exec chmod -x {} \; && \
-    find $PIPELINE2_HOME -type f -name '*.dat' -exec chmod -x {} \; && \
-    find $PIPELINE2_HOME -type f -name '*.properties' -exec chmod -x {} \; && \
-    find $PIPELINE2_HOME -type f -name '*.js' -exec chmod -x {} \; && \
-    find $PIPELINE2_HOME -type f -name '*.css' -exec chmod -x {} \; && \
-    find $PIPELINE2_HOME -type f -name '*.conf' -exec chmod -x {} \; && \
-    find $PIPELINE2_HOME -type f -name '*.gif' -exec chmod -x {} \; && \
-    find $PIPELINE2_HOME -type f -name '*.html' -exec chmod -x {} \; && \
-    rm pipeline2.zip && \
-    rm -r $PIPELINE2_HOME/samples
+# remove build time deps
+RUN rm pipeline2.zip  && \
+    apt-get remove --purge --yes $BUILDTIME_DEPS
 
-RUN sed -i -e 's/org\.daisy\.pipeline\.ws\.host=localhost/org\.daisy\.pipeline\.ws\.host=0.0.0.0/g' $PIPELINE2_HOME/etc/system.properties && \
-	sed -i -e 's/\<root level="DEBUG"\>/\<root level="INFO"\>/g' $PIPELINE2_HOME/etc/config-logback.xml && \
-    echo 'org.ops4j.pax.logging.DefaultServiceLog.level=WARN' >> $PIPELINE2_SYS_PROPS && \
-    echo 'org.ops4j.pax.logging.service.frameworkEventsLogLevel=WARN' >> $PIPELINE2_SYS_PROPS
+# configures bind host, port etc for DAISY Pipeline2
+COPY system.properties /usr/local/daisy-pipeline/etc/system.properties
+# configures default (and other) log levels for DAISY Pipeline2
+COPY config-logback.xml /usr/local/daisy-pipeline/etc/config-logback.xml
 
-USER pipeline2
-
-CMD ["/bin/sh", "-c", "$PIPELINE2_HOME/bin/pipeline2", "remote"]
+CMD ["/bin/sh", "-c", "$PIPELINE2_BASEDIR/bin/pipeline2 remote"]
